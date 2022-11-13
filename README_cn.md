@@ -1,10 +1,13 @@
-# dig-into-ros2
+# Dig-into-ros2 - ROS2 learning notes, ROS2 学习笔记
 
+Dig into ROS2 is mainly to help learning the ROS2 core system, deeply.
 
-ROS2 learning notes, ROS2 学习笔记
+- The basic steps will not be included.
+- The driver, algorithm, and apps will not be included.
 
 ## contents
 
+## getting started
 
 
 ## layout
