@@ -1,0 +1,81 @@
+# DDS API
+
+DDS的通信模型，是多对多的双向数据传输，应用程序产生数据，publisher将数据发布到subscriber的本地缓存中，subscriber所在的应用程序消费数据。整个数据流通过建立在实体之间的QoS服务质量。
+
+作为以数据为中心的通信模型，DDS基于global data space的概念，全局数据空间对所有感兴趣应用程序都可访问，应用程序想向数据空间贡献数据，则可以使用publisher，对于想获取数据的应用程序则使用subscriber.每一次publisher向空间发布新的数据，中间件需要向所有感兴趣的应用程序报告。
+
+（注意，全局数据空间的概念是需求域，而不是实现域，在实现域，每一个publisher或者subscriber都有自己的本地缓存）
+
+通信可以是跨域的domain，只有在一个域中的实体才能够通信成功，publisher和subscriber之间通信的标识是topic主题，主题是一个通信渠道的标记，除了名字之外，还携带data type，附加的QoS
+
+DDS实体建模为类或者是类型接口，类型接口typed interface是一种更好的处理data type的工具，除了定义数据结构外，还定义如何分配内存，定义一些工具类帮助使用这些数据结构。
+
+![](https://tcs.teambition.net/storage/312j9227e36c76b5378f7c096f5d85dd3a50?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTc5Nzg5NywiaWF0IjoxNjcxMTkzMDk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmo5MjI3ZTM2Yzc2YjUzNzhmN2MwOTZmNWQ4NWRkM2E1MCJ9.tn9bpM9Fd8s-W9_AxJQxmqW2mrS8O9JYFiwkdyj5I28&download=image.png "")
+
+# FastDDS-Gen
+
+填充接口定义和中间件之间的Gap，来把接口定义文件中定义的数据类型转化为合适的实现。接口定义是由IDL定义的。
+
+# RTPS-WireProtocol
+
+FastDDS通过标准网络交换数据的协议是RTPS，是DDS规范下网络通信协议。这个协议保证在TCP/UDP/IP下的数据传输，保证不同DDS实现通信的兼容性。
+
+（意思是说，通过网络交互才需要RTPS，因为会产生IP报文）
+
+（在本地的实体之间通信，其实可以不用遵循RTPS，但是由于兼容性，还是会使用）
+
+（所以有了iceoryx，不通过RTPS，只实现本地的共享内存传输）
+
+由于RTPS也是有pub和sub，RTPS天然就是DDS实现选择的底层通信协议。RTPS实体也属于一个RTPS domain，用来表示一个独立的数据平面。RTPS实体与DDS实体是一对一的关系。
+
+（FastDDS前身是FastRTPS，其没有完全实现DDS标准，而是只实现了RTPS标准，通过example可以看出，老版本api使用reader和writer，而不是publisher和subscriber）
+
+（至今FastDDS依然保留两套API，一套是高层的DDSAPI,聚焦于易用性，还有底层的RTPS API，提供对RTPS协议的更精细化的控制，DDS协议肯定比RTPS协议更加简单，因为更加上层，更加符合分布式通信的概念）
+
+# DDS概念
+
+DDS是一个数据为中心的通信协议用于分布式系统通信。DDS规范描述了API以及数据提供方和数据消费方的通信语义。
+
+DDS是一种DCPS模型，Data-Centric Publish Subscribe (DCPS)，其有三种关键的实体，publication 实体，定义了数据产生对象及其属性；subscription 实体，定义了数据消费对象及其属性；configuration实体，使用话题定义了数据的类型，创建publisher和subscriber，绑定QoS属性，用于保证上述实体的通信质量。
+
+DDS使用了QoS来保证DDS实体之间的行为特性。QoS包含多个独立的QoS策略，称作Policy
+
+# DDSI-DCPS概念模型
+
+在DCPS中定义了四个基本元素
+
+- Publisher。DCPS实体负责创建和配置其创建的DataWriters。DataWriter是负责发送消息的实体，每一个DataWriter都有一个指定的Topic
+
+- Subscriber。DCPS实体负责收数据，指定的话题下的数据。其服务于一个或多个DataReader对象，DataReader负责接受新数据的通知。
+
+- Topic.实体，将publication和subscription绑定在一起的。在DDS域内唯一，包含TopicDescription
+
+- Domain。DDS域，用一个ID定义。将所有DDS实体组织在一起的是DDS域，域内的应用程序可以通信。加入到域内的是DomainParticipant。DomainParticipant作为其他DCPS实体的容器，作为Publisher，Subscriber以及Topic实体的工厂。
+
+![](https://tcs.teambition.net/storage/312j2874b2fe5c7bfad390ab014fb90d2cca?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTc5Nzg5NywiaWF0IjoxNjcxMTkzMDk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmoyODc0YjJmZTVjN2JmYWQzOTBhYjAxNGZiOTBkMmNjYSJ9.bGAN5xFbRI0uZXdQkoDwAArT9aQ18bJTSUXC6jDg1l8&download=image.png "")
+
+# RTPS
+
+RTPS协议，开发出来用于支持DDS上层协议。是一个基于发布订阅的在UDP/IP等BestEffort的协议上传输的协议。FastDDS还支持基于TCP的和SHM的
+
+RTPS支持基于广播和多播的通信
+
+在RTPS上层，从DDS继承过来的Domain可以找到，用于定义一个独立的数据平面。多个Domain可以共存。一个Domain可以包含任意个RTPSParticipants，其通信断电endpoints包括：
+
+- **RTPSWriter**: Endpoint able to send data.
+
+- **RTPSReader**: Endpoint able to receive data.
+
+![](https://tcs.teambition.net/storage/312j5c8e2bf93541ab00f73b00262554a1e6?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTc5Nzg5NywiaWF0IjoxNjcxMTkzMDk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmo1YzhlMmJmOTM1NDFhYjAwZjczYjAwMjYyNTU0YTFlNiJ9.gv3C4LftLW5OfpmozTymbvc4YZVsn_DKdbb1WAGHnSg&download=image.png "")
+
+通信是基于Topic的。Topic并不属于任意参与者。参与者，通过RTPSWriters，将数据变更通知发布到指定Topic，RTPSReader通过Topic接收到数据变更通知。通信的基本单元叫做Change，变更，通常用于表示数据在一个话题下的更新。RTPSWriters/RTPSReaders在Topic下在其History下注册这些Change，History用于存放最近的Changes。
+
+在默认的FastDDS配置下，当发布一个Change，发生如下操作
+
+- Change加入到RTPSWriters'的history cache历史缓存
+
+- RTPSWriter发送change 到任务知道的RTPSReaders
+
+- 收到数据后，RTPSReader将change更新到history cache
+
+FastDDS支持和多种配置，允许改变RTPSReaders的行为。比如通过选择不同的QoS policy，可以影响HistoryCaches的管理方式，但是通信机制是大体不变的。
