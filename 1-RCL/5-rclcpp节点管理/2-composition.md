@@ -1,0 +1,3 @@
+# 参考
+
+[https://docs.ros.org/en/foxy/Tutorials/Intermediate/Composition.html](https://docs.ros.org/en/foxy/Tutorials/Intermediate/Composition.html)<br />[https://docs.ros.org/en/foxy/Concepts/About-Composition.html](https://docs.ros.org/en/foxy/Concepts/About-Composition.html)<br />[https://roscon.ros.org/2019/talks/roscon2019_composablenodes.pdf](https://roscon.ros.org/2019/talks/roscon2019_composablenodes.pdf)<br />[https://github.com/fujitatomoya/demos/tree/topic-20191007-composition-intra-launch/composition/src](https://github.com/fujitatomoya/demos/tree/topic-20191007-composition-intra-launch/composition/src)

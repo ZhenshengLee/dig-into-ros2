@@ -1,0 +1,3 @@
+# 参考
+
+[https://navigation.ros.org/setup_guides/lifecycle_composition/setup_lifecycle_composition.html](https://navigation.ros.org/setup_guides/lifecycle_composition/setup_lifecycle_composition.html)<br />[https://navigation.ros.org/configuration/packages/configuring-lifecycle.html](https://navigation.ros.org/configuration/packages/configuring-lifecycle.html)<br />[https://github.com/ros-planning/navigation2/tree/main/nav2_lifecycle_manager](https://github.com/ros-planning/navigation2/tree/main/nav2_lifecycle_manager)<br />[https://plansys2.github.io/tutorials/docs/simple_example.html?highlight=lifecycle](https://plansys2.github.io/tutorials/docs/simple_example.html?highlight=lifecycle)
