@@ -1,0 +1,103 @@
+# 原理
+
+![](https://tcs.teambition.net/storage/312h79022163c6956baaf0bfc2a41719e59c?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg3OTAyMjE2M2M2OTU2YmFhZjBiZmMyYTQxNzE5ZTU5YyJ9.sXiEBkYOiPDo2NS_yMmJGck8-MDWSkj3AOz5hIw95AI&download=image.png "")
+
+# 例子
+
+![](https://tcs.teambition.net/storage/312h70675c798c7645a24785da7c0f0b3be6?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg3MDY3NWM3OThjNzY0NWEyNDc4NWRhN2MwZjBiM2JlNiJ9.ssOYL39Dif5UGTgWbGLzuKM26jmlZD4IIIDx1PaTS64&download=architecture.png "")
+
+初次运行，打开trace，rqt_graph记录，检查基础功能，生成架构文件
+
+topic1:11hz,  0.09s, 执行0.01秒
+
+topic2:7hz,  0.14s，执行0.01s
+
+topic3:  topic1, 执行0.01s
+
+topic4: topic3, 执行0.01s
+
+topic5: topic2, 执行0.01s
+
+topic6: 3hz, 0.33s, 执行0.01s
+
+回调执行时间全部是0.01s，10ms
+
+# 测试目标
+
+测试sub_dependency_node的node-latency
+
+# 启动例子
+
+```bash
+ros2 launch e2e_demo demo2.launch.py
+```
+
+# 传统方法
+
+暂时没搞定
+
+# e2e方法
+
+e2e支持node-latency
+
+## 构建arch
+
+略
+
+## 运行程序
+
+先确认lttng trace是否正常
+
+```bash
+babeltrace ./e2e_demo2/ | grep -e rclcpp_publish -e rclcpp_subscribe
+babeltrace ./e2e_demo2/ | grep -e rclcpp_timer_added
+
+```
+
+## 分析脚本
+
+![](https://tcs.teambition.net/storage/312h3cb335d03c1a160d9f4920425aee0f93?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmgzY2IzMzVkMDNjMWExNjBkOWY0OTIwNDI1YWVlMGY5MyJ9.CDKdxOBl0Urtuoa-49O-w0EbXlQtgISvGcO8AMxCs4I&download=image.png "")
+
+每一个节点内部有多个路径，sub_dependency_node内部有三个路径，我们选取第二个路径为关键路径
+
+![](https://tcs.teambition.net/storage/312h227fe4d2cb98735c0ca5edad50a46d36?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmgyMjdmZTRkMmNiOTg3MzVjMGNhNWVkYWQ1MGE0NmQzNiJ9.QYZK9VeUrQSklQPbk5Fmgryd3vgMZsWd_RYQenr49TM&download=image.png "")
+
+关键路径为sub node的回调1到回调2
+
+![](https://tcs.teambition.net/storage/312h61f03b236b2aae62ee452465f310b8b0?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg2MWYwM2IyMzZiMmFhZTYyZWU0NTI0NjVmMzEwYjhiMCJ9.g0XTacjJCT7bIzOz-S4y2Wg9AEgY-bxFGuRkPc7sI7U&download=image.png "")
+
+这个是sub_node两个回调的执行时间，很不稳定，为什么，因为有调度时间
+
+![](https://tcs.teambition.net/storage/312hd2f7fee4c8092367c97c02500467d0c2?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmhkMmY3ZmVlNGM4MDkyMzY3Yzk3YzAyNTAwNDY3ZDBjMiJ9.O7Ny1xOoTr6yAlBQQg0sK2fstkknvI3BpIeq-Jpqv1M&download=image.png "")
+
+第二个即为调度过程，我们单独分析
+
+![](https://tcs.teambition.net/storage/312h9a791f44b17ed85a929f34f6137a9d58?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg5YTc5MWY0NGIxN2VkODVhOTI5ZjM0ZjYxMzdhOWQ1OCJ9.y3jKCbU2cmanjXBCs1Xnis7sWXbXZfx8VzZez_9C0R0&download=image.png "")
+
+![](https://tcs.teambition.net/storage/312h6c1ef0452bc3dda2cad37ebb93387f8a?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg2YzFlZjA0NTJiYzNkZGEyY2FkMzdlYmI5MzM4N2Y4YSJ9.o5ZRQuXSR4SzrFmm1HhogzlE_VKHtiXhkOlqpXQRhBA&download=image.png "")
+
+调度时间最大为80ms，
+
+## inter-callback-latency
+
+![](https://tcs.teambition.net/storage/312hba0d1eca32391078a8f290abde3b4031?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmhiYTBkMWVjYTMyMzkxMDc4YThmMjkwYWJkZTNiNDAzMSJ9.TVlcwzPwTO5rU7Q5MzZV0cRA6ewZumB-iX2PrMuwiic&download=image.png "")
+
+![](https://tcs.teambition.net/storage/312h624a808e73343aeaceeb634bdd9463ba?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MTg1MTQyMiwiaWF0IjoxNjcxMjQ2NjIyLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMmg2MjRhODA4ZTczMzQzYWVhY2VlYjYzNGJkZDk0NjNiYSJ9.vhmwFTwK2tRXmnXYKG7ditM7HtrIlV5NfLHmUe6YSuU&download=image.png "")
+
+查看调度时间的定义，并不是内核sched事件的记录，而是callback_end和callback_start的时间差，即回调之间的间隔时间
+
+理论上0.11s, 0.15s 中间相隔0.04s
+
+**0.11**，**0.22**，0.33，**0.44**，**0.55**，**0.66**，0.77，**0.88**
+
+**0.15**，**0.30**，**0.45**，**0.60，0.75，0.90**
+
+然后再是调度的开销40ms
+
+后面配置实时性后看看会不会缓解该问题
+
+node-execution-time包括callback-duration和inter-callback latency
+
+回调间隔由哪些部分构成？
+
+高精度时钟的误差，回调之间的理论间隔，以及线程调度时间。
