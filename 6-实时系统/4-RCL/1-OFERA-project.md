@@ -1,0 +1,67 @@
+Ofera Project: Open Framework for Embedded Robot Applications
+
+这是一个欧洲赞助的项目
+
+## 参考
+
+<http://www.ofera.eu/index.php>
+
+[https://micro.ros.org/](https://micro.ros.org/)
+
+## 概述
+
+![](https://tcs.teambition.net/storage/31261b159535d31496243643af6afb3b4c59?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjAyMzE5NywiaWF0IjoxNjcxNDE4Mzk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYxYjE1OTUzNWQzMTQ5NjI0MzY0M2FmNmFmYjNiNGM1OSJ9.cXDePUWvOBUU-JU0ydkYw6x4qNtgzR40RVgTx-lFhZ4&download=image.png "")
+
+部署在实时操作系统上，比如ucos, freeRTOS
+
+拥有ROS2的概念，方便与ROS系统互操作
+
+在执行上具有确定性，计算具有实时性
+
+拥有更好的性能
+
+## 支持的系统和硬件
+
+![](https://tcs.teambition.net/storage/312600fb4708ffebf094477765660bf16cb0?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjAyMzE5NywiaWF0IjoxNjcxNDE4Mzk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYwMGZiNDcwOGZmZWJmMDk0NDc3NzY1NjYwYmYxNmNiMCJ9.zVGWJbMig88bQa1P4hLEh6AiCe0cB9Vzy2Mmpw0-NEU&download=image.png "")
+
+目前支持免费的RTOS
+
+## 应用
+
+- 可以作为ECU，但是产品化需要做到IS026262
+
+- 汽车领域应该还是要autosare, 然后与ROS2在RMW级别做交互
+
+- 可以作为导航版等专用硬件板的ROS2主控
+
+- 不用搭载Linux的条件下运行ROS2，减小成本
+
+- 减少代码移植的成本，以往导航版还需要重新开发
+
+- 上述导航版等专用硬件可以扩展为智能传感器和智能执行器
+
+- 不需要额外的软件驱动，对外直接输出ROS2 消息，大大增强性能。
+
+导航版ROSSerial和OFERA的关系
+
+![](https://tcs.teambition.net/storage/3126f6e160e9d2bf352385f57c2bdf984f84?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjAyMzE5NywiaWF0IjoxNjcxNDE4Mzk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZmNmUxNjBlOWQyYmYzNTIzODVmNTdjMmJkZjk4NGY4NCJ9.C3UOhLG-Iw7b-7ST8BXckQ-OLAO883sb-tY3F6pTv9o&download=image.png "")
+
+![](https://tcs.teambition.net/storage/3126ee0c436df8c6d37fd3865def337d37e9?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjAyMzE5NywiaWF0IjoxNjcxNDE4Mzk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZlZTBjNDM2ZGY4YzZkMzdmZDM4NjVkZWYzMzdkMzdlOSJ9.lycSuzJHz-AeLW4Rep45MiWkxWIrsw-NFFwHGe-PesQ&download=image.png "")
+
+![](https://tcs.teambition.net/storage/3126e5a9284349897a037f36e60e8eb33616?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjAyMzE5NywiaWF0IjoxNjcxNDE4Mzk3LCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZlNWE5Mjg0MzQ5ODk3YTAzN2YzNmU2MGU4ZWIzMzYxNiJ9.pR-SyY8IZf8f2qMZ4HoZgGrMJDwYAFqe9-Jl6gapw2M&download=image.png "")
+
+如果是基于ROSSerial的话，在CodeBase这一块需要彻底重写
+
+## 与autosare的关系
+
+micro-ROS is classic autosare?
+
+通信这块和实时性这块都补齐了之后，就是配套汽车软件了
+
+ROS2这块生态发展起来，就可以做了
+
+## 目前的缺陷
+
+<https://micro.ros.org/docs/overview/ROS_2_feature_comparison/>
+
+主要在高精度定时器，日志，仿真时间这块，其他都好。
