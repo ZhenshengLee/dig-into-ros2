@@ -1,0 +1,194 @@
+# 现代c++构建安全实时软件
+
+safe software for autonomous mobility with modern c++
+
+## 参考
+
+cppcon
+
+[http://cpp-summit.org/speaker/516?uid=c1016&lang=en](http://cpp-summit.org/speaker/516?uid=c1016&lang=en)
+
+[https://www.apex.ai/post/safe-software-for-autonomous-mobility-with-modern-c-presented-at-cppcon-2019](https://www.apex.ai/post/safe-software-for-autonomous-mobility-with-modern-c-presented-at-cppcon-2019)
+
+cppnow by apex
+
+[https://www.youtube.com/watch?v=lRfXjLEqrZU](https://www.youtube.com/watch?v=lRfXjLEqrZU)
+
+cppcon by codeplay
+
+[https://www.youtube.com/watch?v=F4GzsA00s5I](https://www.youtube.com/watch?v=F4GzsA00s5I)
+
+## 作者
+
+![](https://tcs.teambition.net/storage/3126bd0710c22b0848f14d5b096d05dd3493?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZiZDA3MTBjMjJiMDg0OGYxNGQ1YjA5NmQwNWRkMzQ5MyJ9.ddwkpv8kygN1pMCds5kTDQAI8CKNldqOH0hvGGpD2o8&download=image.png "")
+
+避免异常处理时分配内存
+
+标准容器的内存池，避免内存分片的最佳实践
+
+线程库的补充操作适用于实时应用
+
+## cppnow
+
+### 异常是动态分配内存的
+
+抛出异常是动态分配内存的，所以对于实时应用来讲是不好的
+
+![](https://tcs.teambition.net/storage/31264fdd30a5c180420159f855e7cc85a304?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY0ZmRkMzBhNWMxODA0MjAxNTlmODU1ZTdjYzg1YTMwNCJ9.o0Gnf7Grd_QywQw7CfC7IhfTwJmkvxc8ZaTZdyLIZkY&download=image.png "")
+
+## cppcon-apex
+
+### safe 到底是什么意思
+
+![](https://tcs.teambition.net/storage/31264e33c73b9979249ab28ebc86077fd8f6?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY0ZTMzYzczYjk5NzkyNDlhYjI4ZWJjODYwNzdmZDhmNiJ9.ZQGBggqWv_l3nA6sJtqzC_BhL_yiSvc_Hehuv3i80ME&download=image.png "")
+
+iso 26262
+
+![](https://tcs.teambition.net/storage/31261a7a97b7411754e0768f135c26c9c314?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYxYTdhOTdiNzQxMTc1NGUwNzY4ZjEzNWMyNmM5YzMxNCJ9.Vw8-yAvP0sfkf38CMSQidR4LwAeaKM2L1BDnWE2dkKY&download=image.png "")
+
+Safe：安全意味着规避或者消除系统失效带来了异常风险
+
+Qualified：质量认证的。认为遵循某种特定的安全规范
+
+Certified：可信的，认证的。第三方评估后认可遵循特定的安全规范
+
+### 如何做：高层需求
+
+![](https://tcs.teambition.net/storage/3126e555568179d950eadd61434b24bb4ef4?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZlNTU1NTY4MTc5ZDk1MGVhZGQ2MTQzNGIyNGJiNGVmNCJ9.-Ut1z8-eA5HidXW44FtLB9ZlIICRyOWCF8gad3u5XVk&download=image.png "")
+
+高层：
+
+认证的工具链
+
+内存的静态操作，不是运行时操作
+
+实时
+
+可测试性
+
+### 认证工具链
+
+![](https://tcs.teambition.net/storage/3126c021f5fb6aaa670539a31d4fde4d43a7?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZjMDIxZjVmYjZhYWE2NzA1MzlhMzFkNGZkZTRkNDNhNyJ9.NsnHBt-m9Aa_go4HI2xYTeyEGiFcSqkaEB2y2YjIjB8&download=image.png "")
+
+操作系统，编译工具链，标准库
+
+任何依赖的软件库也必须是经过认证的
+
+- 去除大的第三方库（boost poco）
+
+- 第三方库很难可信赖，所以自己写吧！
+
+### 静态内存分配
+
+![](https://tcs.teambition.net/storage/3126cf7dde806bc60f4712bde1b1572cc71c?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZjZjdkZGU4MDZiYzYwZjQ3MTJiZGUxYjE1NzJjYzcxYyJ9.hTyJQ5U_EicNrv6Lma8Oow42bpIYTIKrb9J5l_MtEaA&download=image.png "")
+
+运行时必须没有内存分配
+
+没有内存碎片
+
+保证内存资源供应
+
+![](https://tcs.teambition.net/storage/312677cf36c05888168ec2c3a05dda4506e3?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY3N2NmMzZjMDU4ODgxNjhlYzJjM2EwNWRkYTQ1MDZlMyJ9.sq8uIp6zFWawT50gxLQysFBXIkR1hQj81mnUqwb_MlA&download=image.png "")
+
+使用多类型内存池技术来保证静态内存分配，防止内存碎片。
+
+### 异常的内存分配
+
+![](https://tcs.teambition.net/storage/312680fcde738791c971453a9929e84055d7?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY4MGZjZGU3Mzg3OTFjOTcxNDUzYTk5MjllODQwNTVkNyJ9.T4yThNdhSjRiEU9HCjcfHIdFkXk6DCcyNaKWcXjF3ZM&download=image.png "")
+
+标准异常抛出时是动态分配内存的，
+
+![](https://tcs.teambition.net/storage/312698a6b5736ba2c08a9e17b464561e38c9?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY5OGE2YjU3MzZiYTJjMDhhOWUxN2I0NjQ1NjFlMzhjOSJ9.E8iL8R7UjI-5kKutynzr8RjiwAelTL_G-tGBNFmw6eI&download=image.png "")
+
+要改gcc库程序，还要改标准库程序
+
+![](https://tcs.teambition.net/storage/3126a695c10c38be669f92ad6d73310139e4?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZhNjk1YzEwYzM4YmU2NjlmOTJhZDZkNzMzMTAxMzllNCJ9.U8O46gx8GBgLQyFN3Ng24IRY5pxs_4YdneQ8Ht9f6kw&download=image.png "")
+
+对于第三方依赖，还是个很大的挑战，所以编程规范不推荐使用异常机制
+
+### 实时性考虑
+
+![](https://tcs.teambition.net/storage/31266831b60477d0d06acf0b813e99fa72ae?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjY2ODMxYjYwNDc3ZDBkMDZhY2YwYjgxM2U5OWZhNzJhZSJ9.GmCX6IQ7zsaiUCHV6xiRUZLaNqY9_WB486wHLiLQdVY&download=image.png "")
+
+实时性需求
+
+- 确定性的运行时行为
+
+- 可抢占式
+
+- 区分优先级
+
+挑战
+
+- 标准c++线程库对线程的控制有限
+
+- c++程序不可抢占
+
+- 多线程程序难以编写来保证其顺序
+
+- 如果产生数据竞争，程序行为是未定义的
+
+![](https://tcs.teambition.net/storage/31261c239e560560de49296efde4cdfa6799?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYxYzIzOWU1NjA1NjBkZTQ5Mjk2ZWZkZTRjZGZhNjc5OSJ9.kIrLCGwsdlmpqBjHSDFZLE4kTxdPMFH7XKIkerCFuc8&download=image.png "")
+
+使用一个支持rt的标准库
+
+操作系统的调度器必须支持实时
+
+使用静态检查工具
+
+### 可测试性
+
+![](https://tcs.teambition.net/storage/31263bbd3529b1c5f2c018cc1cfae1b9cb82?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYzYmJkMzUyOWIxYzVmMmMwMThjYzFjZmFlMWI5Y2I4MiJ9.ls5wRcTM3C3cpQS3qthStHCa_EwV8xKata31t7kBfsQ&download=image.png "")
+
+
+
+#### 错误注入的概念
+
+[https://www.cnblogs.com/jeJee/archive/2012/12/05/2803930.html](https://www.cnblogs.com/jeJee/archive/2012/12/05/2803930.html)
+
+在我们做软件测试的时候，除了保证正常情况下功能的完整性，有时也要考虑到在某些极端情况下软件的鲁棒性。然而当我们想去构造某些极端情况来验证程序的鲁棒性时，经常会发现这些极端情况很难构造。
+
+在软件测试领域，错误注入技术是通过注入错误来覆盖那些正常情况下不太容易出现的情况，以期增加测试的覆盖率。此技术对于建立一个健壮的系统是十分重要的。而在我们的实际工作中，由于某些极端情况下的环境不太好构造（如磁盘损坏），使得测试的过程中很难进行极端环境下的软件测试，同时，也给重现和定位问题带来极大的麻烦。
+
+这里还想顺便提一下，即使测试覆盖率达到100%了，也不能说明软件就没有问题了。因为可能还有一些异常情况，程序里没有考虑到，而对应的也没有这样的测试用例。而这些往往是软件的鲁棒性甚至安全性所疏忽的地方。
+
+#### 错误注入的原理
+
+错误注入的基本原理是：拦截原来的调用，转而调用错误注入程序自定义的代码，由错误注入程序来决定是否注入错误以及注入什么样的错误，并决定是直接返回还是继续调用程序原本要调用的系统函数。
+
+![](https://tcs.teambition.net/storage/31260d67e93252752d34176c5b67779ec3c0?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYwZDY3ZTkzMjUyNzUyZDM0MTc2YzViNjc3NzllYzNjMCJ9.RwMo35XWYdfvznQXkhiY2v9Ur9_H5742Ewil9TKsiUs&download=image.png "")
+
+替换动态库
+
+![](https://tcs.teambition.net/storage/3126b01d150bfd8f10f83be74ade58cd3de2?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjZiMDFkMTUwYmZkOGYxMGY4M2JlNzRhZGU1OGNkM2RlMiJ9.puqCLyzqT6YPHJW_YH_e-MntbD-G8YHkHyKVeprLT1M&download=image.png "")
+
+模板
+
+![](https://tcs.teambition.net/storage/312618f09ccd86363d44bdb863c2b5a81514?Signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBcHBJRCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9hcHBJZCI6IjU5Mzc3MGZmODM5NjMyMDAyZTAzNThmMSIsIl9vcmdhbml6YXRpb25JZCI6IiIsImV4cCI6MTY3MjA0Njg4MSwiaWF0IjoxNjcxNDQyMDgxLCJyZXNvdXJjZSI6Ii9zdG9yYWdlLzMxMjYxOGYwOWNjZDg2MzYzZDQ0YmRiODYzYzJiNWE4MTUxNCJ9.UOJNng4xb-w0nX4ehGVyq6cMarJzwgAErYi3S4JYG0M&download=image.png "")
+
+多态
+
+这些是测试开发技术，参考《单元测试的艺术》
+
+## 问题
+
+### 怎么封装容器的？
+
+我们已经使用了认证的标准库
+
+### 工具来测量stack usage
+
+我们有工具，全分支测试，来查看是否有栈溢出
+
+### 为什么选择这个老的specification
+
+没听懂
+
+### 怎样从头开发一个safe的库
+
+很复杂
+
+## cppcon-codeplay
+
+
+
